@@ -1,0 +1,5 @@
+# Robot 1 has 3 skills, while Robot 2 has 4 skills. Robots do not have same number of skills.
+# All the robots DONOT share the same set and number of skills (no_skills) and objects have different mass. In this case where all robots have different sets of skills and objects have different mass - Focus on Task Allocation based on Robot Skills alone. 
+# Analyze the skills required for each subtask and the skills each robot possesses. In this scenario, we have one main subtask: 'Throw the Spatula in the trash'.
+# For the 'Throw the Spatula in the trash' subtask, it can be performed by any robot with 'GoToObject', 'PickupObject', and 'ThrowObject' skills. However, no individual robot has all these skills. This is a skill gap that needs to be addressed. Form a team of robots. The combined skill set of the team must include 'GoToObject', 'PickupObject', and 'ThrowObject'. Team of Robots 1 and 2 possess all these required skills.
+# Teams are required since SubTasks can't be performed with individual robots as explained above. The 'Throw the Spatula in the trash' subtask is assigned to team of Robots 1 and 2.

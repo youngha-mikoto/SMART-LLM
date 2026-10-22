@@ -1,0 +1,8 @@
+# Robot 1, 2 and 3 have 13 skills. All robots do have same number of skills.
+# All the robots share the same set and number of skills (no_skills) & all objects DONOT have same mass. In this case where all robots have same skills and all objects have different mass- Focus on Task Allocation based on Mass alone. 
+# Analyze the mass required for each object being PickedUp by the 'PickupObject' skill, and the mass capacity each robot possesses. In this scenario, we have two main subtasks: 'Wash the Lettuce' and 'Place Lettuce on the Countertop'.
+# For the 'Wash the Lettuce' subtask, mass of the Lettuce is 0.4699999988079071. Hence it can be performed by any robot with mass capacity greater than or equal to 0.4699999988079071. In this case, Robots 1,2 and 3 has a mass capacity =100 which is greater than or equal to 0.4699999988079071.
+# For the 'Place Lettuce on Countertop' subtask, it can be performed by any robot with a mass capacity greater than or equal to that of lettuce which is again =0.4699999988079071 . In this case, Robots 1,2 and 3 has a mass capacity =100 which is greater than or equal to that of lettuce.
+# No teams are required since SubTasks can be performed with individual robots as explained above.
+# The 'Wash the Lettuce' subtask is assigned to Robot 1 since it's available first in list of available robots.
+# The 'Place Lettuce on Countertop' subtask is assigned to Robot2 since it's next available in list after Robot1.
