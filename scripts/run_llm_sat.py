@@ -16,6 +16,15 @@ def load_decomposition_examples():
     )
 
 
+def build_decomposition_prompt(task, actions, examples):
+    return (
+        "Follow the examples to decompose the task. Return only Python code.\n\n"
+        f"Available actions: {actions}\n\n"
+        f"{examples}\n\n"
+        f"# Task Description: {task}"
+    )
+
+
 def load_objects(floor_plan):
     controller = Controller(scene=f"FloorPlan{floor_plan}")
     objects = [
