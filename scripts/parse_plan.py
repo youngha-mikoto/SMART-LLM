@@ -34,6 +34,33 @@ def extract_required_skills(plan_path):
     return required_skills
 
 
+def extract_used_objects(plan_path):
+    source = Path(plan_path).read_text(encoding="utf-8")
+    tree = ast.parse(source, filename=str(plan_path))
+    used_objects = {}
+
+    for node in tree.body:
+        if not isinstance(node, ast.FunctionDef):
+            continue
+
+        objects = []
+        for statement in node.body:
+            if not isinstance(statement, ast.Expr) or not isinstance(
+                statement.value, ast.Call
+            ):
+                continue
+            if not isinstance(statement.value.func, ast.Name):
+                continue
+            for arg in statement.value.args:
+                if isinstance(arg, ast.Constant) and isinstance(arg.value, str):
+                    if arg.value not in objects:
+                        objects.append(arg.value)
+
+        used_objects[node.name] = objects
+
+    return used_objects
+
+
 def extract_thread_targets(plan_path):
     source = Path(plan_path).read_text(encoding="utf-8")
     tree = ast.parse(source, filename=str(plan_path))
@@ -107,6 +134,10 @@ if __name__ == "__main__":
 
     output_path = Path(args.plan_path).with_name("required_skills.json")
     output_path.write_text(json.dumps(required_skills, indent=2) + "\n", encoding="utf-8")
+
+    print("\nUsed objects:")
+    for name, objects in extract_used_objects(args.plan_path).items():
+        print(f"{name}: {objects}")
 
     print("\nThread targets:")
     print(extract_thread_targets(args.plan_path))
