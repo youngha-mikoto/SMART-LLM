@@ -1,0 +1,9 @@
+{
+  "put_apple_in_fridge": [
+    "GoToObject",
+    "PickupObject",
+    "OpenObject",
+    "PutObject",
+    "CloseObject"
+  ]
+}

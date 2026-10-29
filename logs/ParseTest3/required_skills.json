@@ -1,0 +1,20 @@
+{
+  "slice_ingredients": [
+    "GoToObject",
+    "PickupObject",
+    "SliceObject",
+    "PutObject"
+  ],
+  "wash_plate": [
+    "GoToObject",
+    "PickupObject",
+    "PutObject",
+    "SwitchOn",
+    "SwitchOff"
+  ],
+  "assemble_sandwich": [
+    "GoToObject",
+    "PickupObject",
+    "PutObject"
+  ]
+}

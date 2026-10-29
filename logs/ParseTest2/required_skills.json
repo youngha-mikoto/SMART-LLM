@@ -1,0 +1,18 @@
+{
+  "cook_egg_and_put_in_fridge": [
+    "GoToObject",
+    "PickupObject",
+    "OpenObject",
+    "PutObject",
+    "CloseObject",
+    "SwitchOn",
+    "SwitchOff"
+  ],
+  "chill_bread_and_put_on_counter": [
+    "GoToObject",
+    "PickupObject",
+    "OpenObject",
+    "PutObject",
+    "CloseObject"
+  ]
+}

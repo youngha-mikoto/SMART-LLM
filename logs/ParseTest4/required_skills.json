@@ -1,0 +1,15 @@
+{
+  "prepare_potato": [
+    "GoToObject",
+    "PickupObject",
+    "SliceObject",
+    "PutObject"
+  ],
+  "fry_potato": [
+    "GoToObject",
+    "PickupObject",
+    "PutObject",
+    "SwitchOn",
+    "SwitchOff"
+  ]
+}
