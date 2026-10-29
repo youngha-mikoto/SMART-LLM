@@ -15,11 +15,8 @@ def extract_thread_targets(plan_path):
     thread_targets = {}
 
     for node in tree.body:
-        if not isinstance(node, ast.Assign):
+        if not isinstance(node, ast.Assign) or not isinstance(node.value, ast.Call):
             continue
-        if not isinstance(node.value, ast.Call):
-            continue
-
         if ast.unparse(node.value.func) != "threading.Thread":
             continue
 
