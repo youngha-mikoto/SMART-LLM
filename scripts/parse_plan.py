@@ -52,6 +52,23 @@ def extract_execution_events(plan_path):
     return events
 
 
+def build_dag(events):
+    nodes = []
+    edges = []
+    predecessors = []
+
+    for kind, name in events:
+        if kind == "join":
+            predecessors.append(name)
+        else:
+            nodes.append(name)
+            edges.extend((previous, name) for previous in predecessors)
+            if kind == "call":
+                predecessors = [name]
+
+    return {"nodes": nodes, "edges": edges}
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("plan_path", help="Path to decomposed_plan.py")
@@ -67,3 +84,6 @@ if __name__ == "__main__":
     print("\nExecution events:")
     for event in extract_execution_events(args.plan_path):
         print(event)
+
+    print("\nDAG:")
+    print(build_dag(extract_execution_events(args.plan_path)))
