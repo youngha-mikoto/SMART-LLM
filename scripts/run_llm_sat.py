@@ -1,10 +1,17 @@
 import argparse
 import json
+from pathlib import Path
 
 
 def load_tasks(floor_plan):
     with open(f"data/final_test/FloorPlan{floor_plan}.json", encoding="utf-8") as file:
         return [json.loads(line)["task"] for line in file]
+
+
+def load_decomposition_examples():
+    return Path("data/pythonic_plans/train_task_decompose.py").read_text(
+        encoding="utf-8"
+    )
 
 
 if __name__ == "__main__":
