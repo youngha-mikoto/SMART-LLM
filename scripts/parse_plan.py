@@ -9,6 +9,30 @@ def extract_subtask_names(plan_path):
     return [node.name for node in tree.body if isinstance(node, ast.FunctionDef)]
 
 
+def extract_required_skills(plan_path):
+    source = Path(plan_path).read_text(encoding="utf-8")
+    tree = ast.parse(source, filename=str(plan_path))
+    required_skills = {}
+
+    for node in tree.body:
+        if not isinstance(node, ast.FunctionDef):
+            continue
+
+        skills = []
+        for statement in node.body:
+            if not isinstance(statement, ast.Expr) or not isinstance(
+                statement.value, ast.Call
+            ):
+                continue
+            func = statement.value.func
+            if isinstance(func, ast.Name) and func.id not in skills:
+                skills.append(func.id)
+
+        required_skills[node.name] = skills
+
+    return required_skills
+
+
 def extract_thread_targets(plan_path):
     source = Path(plan_path).read_text(encoding="utf-8")
     tree = ast.parse(source, filename=str(plan_path))
@@ -74,6 +98,10 @@ if __name__ == "__main__":
     print("Subtasks:")
     for name in extract_subtask_names(args.plan_path):
         print(name)
+
+    print("\nRequired skills:")
+    for name, skills in extract_required_skills(args.plan_path).items():
+        print(f"{name}: {skills}")
 
     print("\nThread targets:")
     print(extract_thread_targets(args.plan_path))
