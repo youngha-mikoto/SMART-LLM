@@ -57,8 +57,13 @@ if __name__ == "__main__":
     parser.add_argument("plan_path", help="Path to decomposed_plan.py")
     args = parser.parse_args()
 
+    print("Subtasks:")
     for name in extract_subtask_names(args.plan_path):
         print(name)
+
+    print("\nThread targets:")
     print(extract_thread_targets(args.plan_path))
+
+    print("\nExecution events:")
     for event in extract_execution_events(args.plan_path):
         print(event)
