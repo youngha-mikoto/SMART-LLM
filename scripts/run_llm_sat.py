@@ -2,6 +2,8 @@ import argparse
 import json
 from pathlib import Path
 
+from ai2thor.controller import Controller
+
 
 def load_tasks(floor_plan):
     with open(f"data/final_test/FloorPlan{floor_plan}.json", encoding="utf-8") as file:
@@ -12,6 +14,16 @@ def load_decomposition_examples():
     return Path("data/pythonic_plans/train_task_decompose.py").read_text(
         encoding="utf-8"
     )
+
+
+def load_objects(floor_plan):
+    controller = Controller(scene=f"FloorPlan{floor_plan}")
+    objects = [
+        {"name": obj["objectType"], "mass": obj["mass"]}
+        for obj in controller.last_event.metadata["objects"]
+    ]
+    controller.stop()
+    return objects
 
 
 if __name__ == "__main__":
