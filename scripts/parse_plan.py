@@ -1,5 +1,6 @@
 import argparse
 import ast
+import json
 from pathlib import Path
 
 
@@ -100,8 +101,12 @@ if __name__ == "__main__":
         print(name)
 
     print("\nRequired skills:")
-    for name, skills in extract_required_skills(args.plan_path).items():
+    required_skills = extract_required_skills(args.plan_path)
+    for name, skills in required_skills.items():
         print(f"{name}: {skills}")
+
+    output_path = Path(args.plan_path).with_name("required_skills.json")
+    output_path.write_text(json.dumps(required_skills, indent=2) + "\n", encoding="utf-8")
 
     print("\nThread targets:")
     print(extract_thread_targets(args.plan_path))
