@@ -34,7 +34,7 @@ def LM(prompt, gpt_version, max_tokens=128, temperature=0, stop=None, logprobs=1
     elif gpt_version == "gpt-5":
         response = openai.ChatCompletion.create(model=gpt_version,
                                               messages=prompt,
-                                              max_completion_tokens=max_tokens)
+                                              max_completion_tokens=8192)
         return response, response["choices"][0]["message"]["content"].strip()
 
     else:
