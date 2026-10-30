@@ -31,6 +31,12 @@ def LM(prompt, gpt_version, max_tokens=128, temperature=0, stop=None, logprobs=1
         
         return response, response["choices"][0]["text"].strip()
     
+    elif gpt_version == "gpt-5":
+        response = openai.ChatCompletion.create(model=gpt_version,
+                                              messages=prompt,
+                                              max_completion_tokens=max_tokens)
+        return response, response["choices"][0]["message"]["content"].strip()
+
     else:
         response = openai.ChatCompletion.create(model=gpt_version, 
                                             messages=prompt, 
@@ -65,8 +71,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--floor-plan", type=int, required=True)
     parser.add_argument("--openai-api-key-file", type=str, default="api_key")
-    parser.add_argument("--gpt-version", type=str, default="gpt-4", 
-                        choices=['gpt-3.5-turbo', 'gpt-4', 'gpt-3.5-turbo-16k'])
+    parser.add_argument("--gpt-version", type=str, default="gpt-5", 
+                        choices=['gpt-3.5-turbo', 'gpt-4', 'gpt-3.5-turbo-16k', 'gpt-5'])
     
     parser.add_argument("--prompt-decompse-set", type=str, default="train_task_decompose", 
                         choices=['train_task_decompose'])
