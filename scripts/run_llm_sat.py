@@ -230,7 +230,7 @@ if __name__ == "__main__":
         for idx, task in enumerate(test_tasks):
             task_name = "{fxn}".format(fxn = '_'.join(task.split(' ')))
             task_name = task_name.replace('\n','')
-            folder_name = f"{task_name}_plans_{date_time}"
+            folder_name = f"_SAT_{task_name}_plans_{date_time}"
             exec_folders.append(folder_name)
             
             os.mkdir("./logs/"+folder_name)
