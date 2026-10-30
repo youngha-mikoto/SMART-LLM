@@ -137,18 +137,20 @@ if __name__ == "__main__":
     
     print ("Generating Decompsed Plans...")
     
+    token_usage = [{} for task in test_tasks]
     decomposed_plan = []
-    for task in test_tasks:
+    for i, task in enumerate(test_tasks):
         curr_prompt =  f"{prompt}\n\n# Task Description: {task}"
         
         if "gpt" not in args.gpt_version:
             # older gpt versions
-            _, text = LM(curr_prompt, args.gpt_version, max_tokens=1000, stop=["def"], frequency_penalty=0.15)
+            response, text = LM(curr_prompt, args.gpt_version, max_tokens=1000, stop=["def"], frequency_penalty=0.15)
         else:            
             messages = [{"role": "user", "content": curr_prompt}]
-            _, text = LM(messages,args.gpt_version, max_tokens=1300, frequency_penalty=0.0)
+            response, text = LM(messages,args.gpt_version, max_tokens=1300, frequency_penalty=0.0)
 
         decomposed_plan.append(text)
+        token_usage[i]["decomposition"] = response["usage"]
         
     # print ("Generating Allocation Solution...")
 
@@ -177,19 +179,20 @@ if __name__ == "__main__":
 
         # if "gpt" not in args.gpt_version:
             # older versions of GPT
-            # _, text = LM(curr_prompt, args.gpt_version, max_tokens=1000, stop=["def"], frequency_penalty=0.65)
+            # response, text = LM(curr_prompt, args.gpt_version, max_tokens=1000, stop=["def"], frequency_penalty=0.65)
         
         # elif "gpt-3.5" in args.gpt_version:
             # gpt 3.5 and its variants
             # messages = [{"role": "user", "content": curr_prompt}]
-            # _, text = LM(messages, args.gpt_version, max_tokens=1500, frequency_penalty=0.35)
+            # response, text = LM(messages, args.gpt_version, max_tokens=1500, frequency_penalty=0.35)
         
         # else:          
             # gpt 4.0
             # messages = [{"role": "system", "content": "You are a Robot Task Allocation Expert. Determine whether the subtasks must be performed sequentially or in parallel, or a combination of both based on your reasoning. In the case of Task Allocation based on Robot Skills alone - First check if robot teams are required. Then Ensure that robot skills or robot team skills match the required skills for the subtask when allocating. Make sure that condition is met. In the case of Task Allocation based on Mass alone - First check if robot teams are required. Then Ensure that robot mass capacity or robot team combined mass capacity is greater than or equal to the mass for the object when allocating. Make sure that condition is met. In both the Task Task Allocation based on Mass alone and Task Allocation based on Skill alone, if there are multiple options for allocation, pick the best available option by reasoning to the best of your ability."},{"role": "system", "content": "You are a Robot Task Allocation Expert"},{"role": "user", "content": curr_prompt}]
-            # _, text = LM(messages, args.gpt_version, max_tokens=400, frequency_penalty=0.69)
+            # response, text = LM(messages, args.gpt_version, max_tokens=400, frequency_penalty=0.69)
 
         # allocated_plan.append(text)
+        # token_usage[i]["allocation"] = response["usage"]
     
     # print ("Generating Allocated Code...")
     
@@ -218,13 +221,14 @@ if __name__ == "__main__":
         
         # if "gpt" not in args.gpt_version:
             # older versions of GPT
-            # _, text = LM(curr_prompt, args.gpt_version, max_tokens=1000, stop=["def"], frequency_penalty=0.30)
+            # response, text = LM(curr_prompt, args.gpt_version, max_tokens=1000, stop=["def"], frequency_penalty=0.30)
         # else:            
             # using variants of gpt 4 or 3.5
             # messages = [{"role": "system", "content": "You are a Robot Task Allocation Expert"},{"role": "user", "content": curr_prompt}]
-            # _, text = LM(messages, args.gpt_version, max_tokens=1400, frequency_penalty=0.4)
+            # response, text = LM(messages, args.gpt_version, max_tokens=1400, frequency_penalty=0.4)
 
         # code_plan.append(text)
+        # token_usage[i]["code_generation"] = response["usage"]
     
     # save generated plan
     exec_folders = []
@@ -250,6 +254,12 @@ if __name__ == "__main__":
                 f.write(f"\nground_truth = {gt_test_tasks[idx]}")
                 f.write(f"\ntrans = {trans_cnt_tasks[idx]}")
                 f.write(f"\nmax_trans = {max_trans_cnt_tasks[idx]}")
+                f.write(f"\ntoken_usage = {json.dumps(token_usage[idx])}")
+                total_usage = {
+                    key: sum(usage[key] for usage in token_usage[idx].values())
+                    for key in ("prompt_tokens", "completion_tokens", "total_tokens")
+                }
+                f.write(f"\ntotal_token_usage = {json.dumps(total_usage)}")
 
             with open(f"./logs/{folder_name}/decomposed_plan.py", 'w') as d:
                 d.write(decomposed_plan[idx])
