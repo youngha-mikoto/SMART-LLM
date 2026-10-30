@@ -1,8 +1,17 @@
 import argparse
 import json
+import sys
 from pathlib import Path
 
 from ai2thor.controller import Controller
+
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+
+from resources.actions import ai2thor_actions
+
+
+def load_actions():
+    return ai2thor_actions
 
 
 def load_tasks(floor_plan):
