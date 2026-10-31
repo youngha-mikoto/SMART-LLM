@@ -1,0 +1,49 @@
+{
+  "subtasks": {
+    "put_egg_in_fridge": {
+      "required_skills": [
+        "GoToObject",
+        "PickupObject",
+        "OpenObject",
+        "PutObject",
+        "CloseObject"
+      ]
+    },
+    "prepare_apple_slices": {
+      "required_skills": [
+        "GoToObject",
+        "PickupObject",
+        "SliceObject",
+        "PutObject"
+      ]
+    },
+    "place_pot_with_apple_slices": {
+      "required_skills": [
+        "GoToObject",
+        "PickupObject",
+        "PutObject",
+        "OpenObject",
+        "CloseObject"
+      ]
+    }
+  },
+  "edges": [
+    [
+      "put_egg_in_fridge",
+      "place_pot_with_apple_slices"
+    ],
+    [
+      "prepare_apple_slices",
+      "place_pot_with_apple_slices"
+    ]
+  ],
+  "execution_layers": [
+    [
+      "put_egg_in_fridge",
+      "prepare_apple_slices"
+    ],
+    [
+      "place_pot_with_apple_slices"
+    ]
+  ]
+}

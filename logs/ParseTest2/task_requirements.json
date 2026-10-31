@@ -1,0 +1,31 @@
+{
+  "subtasks": {
+    "cook_egg_and_put_in_fridge": {
+      "required_skills": [
+        "GoToObject",
+        "PickupObject",
+        "OpenObject",
+        "PutObject",
+        "CloseObject",
+        "SwitchOn",
+        "SwitchOff"
+      ]
+    },
+    "chill_bread_and_put_on_counter": {
+      "required_skills": [
+        "GoToObject",
+        "PickupObject",
+        "OpenObject",
+        "PutObject",
+        "CloseObject"
+      ]
+    }
+  },
+  "edges": [],
+  "execution_layers": [
+    [
+      "cook_egg_and_put_in_fridge",
+      "chill_bread_and_put_on_counter"
+    ]
+  ]
+}

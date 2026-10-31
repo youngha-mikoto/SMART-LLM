@@ -1,0 +1,19 @@
+{
+  "subtasks": {
+    "put_apple_in_fridge": {
+      "required_skills": [
+        "GoToObject",
+        "PickupObject",
+        "OpenObject",
+        "PutObject",
+        "CloseObject"
+      ]
+    }
+  },
+  "edges": [],
+  "execution_layers": [
+    [
+      "put_apple_in_fridge"
+    ]
+  ]
+}
