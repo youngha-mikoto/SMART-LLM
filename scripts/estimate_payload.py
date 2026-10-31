@@ -1,4 +1,13 @@
+import ast
 import json
+from pathlib import Path
+
+
+def load_object_masses(log_path):
+    lines = Path(log_path).read_text(encoding="utf-8").splitlines()
+    for line in lines:
+        if line.startswith("objects = "):
+            return ast.literal_eval(line.split(" = ", 1)[1])
 
 
 def build_payload_prompt(plan, objects):
