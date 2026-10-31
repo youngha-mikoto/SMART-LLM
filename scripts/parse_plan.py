@@ -91,6 +91,21 @@ def build_dag(events):
     return {"nodes": nodes, "edges": edges}
 
 
+def build_execution_layers(dag):
+    nodes = dag["nodes"][:]
+    edges = dag["edges"][:]
+    layers = []
+
+    while nodes:
+        blocked = {target for source, target in edges}
+        layer = [node for node in nodes if node not in blocked]
+        layers.append(layer)
+        nodes = [node for node in nodes if node not in layer]
+        edges = [(source, target) for source, target in edges if source not in layer]
+
+    return layers
+
+
 def save_task_requirements(plan_path, required_skills, dag):
     requirements = {
         "subtasks": {
@@ -98,6 +113,7 @@ def save_task_requirements(plan_path, required_skills, dag):
             for name, skills in required_skills.items()
         },
         "edges": dag["edges"],
+        "execution_layers": build_execution_layers(dag),
     }
     output_path = Path(plan_path).with_name("task_requirements.json")
     output_path.write_text(json.dumps(requirements, indent=2) + "\n", encoding="utf-8")
