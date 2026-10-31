@@ -3,6 +3,8 @@ import ast
 import json
 from pathlib import Path
 
+import openai
+
 
 def load_object_masses(log_path):
     lines = Path(log_path).read_text(encoding="utf-8").splitlines()
@@ -34,9 +36,36 @@ def build_payload_prompt_from_file(plan_path):
     return build_payload_prompt(plan, objects)
 
 
+def set_api_key(api_key_path):
+    openai.api_key = Path(api_key_path).read_text(encoding="utf-8").strip()
+
+
+def estimate_payload(prompt):
+    response = openai.ChatCompletion.create(
+        model="gpt-5",
+        messages=[{"role": "user", "content": prompt}],
+        max_completion_tokens=8192,
+        response_format={"type": "json_object"},
+    )
+    choice = response["choices"][0]
+    if choice["finish_reason"] != "stop":
+        raise ValueError(f"Payload estimation did not finish: {choice['finish_reason']}")
+    return json.loads(choice["message"]["content"]), response["usage"]
+
+
+def save_token_usage(log_path, usage):
+    with open(log_path, "a", encoding="utf-8") as file:
+        file.write(f"\npayload_token_usage = {json.dumps(usage)}\n")
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("plan_path", help="Path to decomposed_plan.py")
+    parser.add_argument("--api-key-file", default="api_key.txt")
     args = parser.parse_args()
 
-    print(build_payload_prompt_from_file(args.plan_path))
+    prompt = build_payload_prompt_from_file(args.plan_path)
+    set_api_key(args.api_key_file)
+    estimates, usage = estimate_payload(prompt)
+    save_token_usage(Path(args.plan_path).with_name("log.txt"), usage)
+    print(json.dumps(estimates, indent=2, ensure_ascii=False))
