@@ -58,6 +58,23 @@ def save_token_usage(log_path, usage):
         file.write(f"\npayload_token_usage = {json.dumps(usage)}\n")
 
 
+def save_payload_estimates(requirements_path, estimates):
+    requirements_path = Path(requirements_path)
+    requirements = json.loads(requirements_path.read_text(encoding="utf-8"))
+    if set(estimates) != set(requirements["subtasks"]):
+        raise ValueError("Estimated subtask names do not match task requirements.")
+
+    for name, estimate in estimates.items():
+        requirements["subtasks"][name]["required_max_payload_kg"] = estimate[
+            "required_max_payload_kg"
+        ]
+        requirements["subtasks"][name]["assumption"] = estimate["assumption"]
+
+    requirements_path.write_text(
+        json.dumps(requirements, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("plan_path", help="Path to decomposed_plan.py")
@@ -68,4 +85,5 @@ if __name__ == "__main__":
     set_api_key(args.api_key_file)
     estimates, usage = estimate_payload(prompt)
     save_token_usage(Path(args.plan_path).with_name("log.txt"), usage)
+    save_payload_estimates(Path(args.plan_path).with_name("task_requirements.json"), estimates)
     print(json.dumps(estimates, indent=2, ensure_ascii=False))
