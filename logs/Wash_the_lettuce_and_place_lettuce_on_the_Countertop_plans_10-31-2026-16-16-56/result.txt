@@ -1,0 +1,48 @@
+Wash_the_lettuce_and_place_lettuce_on_the_Countertop_plans_10-31-2026-16-16-56
+No Breaks:  1
+Going to  Lettuce|+01.11|+00.83|-01.43 {'x': 1.1213102340698242, 'y': 0.8314239382743835, 'z': -1.4405661821365356}
+Reached:  Lettuce
+PIcking:  Lettuce
+Picking Up  Lettuce|+01.11|+00.83|-01.43 {'x': 1.1213102340698242, 'y': 0.8314239382743835, 'z': -1.4405661821365356}
+Going to  Sink|+01.38|+00.81|-01.27 {'x': 1.2521370649337769, 'y': 0.8267311453819275, 'z': -1.268615484237671}
+Reached:  Sink
+Switching On:  Faucet
+Going to  Faucet|+01.31|+00.90|-01.54 {'x': 1.31, 'y': 0.9, 'z': -1.54}
+Reached:  Faucet|+01.31|+00.90|-01.54
+Switching Off:  Faucet
+Going to  Faucet|+01.31|+00.90|-01.54 {'x': 1.31, 'y': 0.9, 'z': -1.54}
+Reached:  Faucet|+01.31|+00.90|-01.54
+PIcking:  Lettuce
+Picking Up  Lettuce|+01.11|+00.83|-01.43 {'x': 1.1281752586364746, 'y': 0.894970715045929, 'z': -1.3905558586120605}
+Going to  CounterTop|-00.36|+00.95|+01.09 {'x': -0.34021228551864624, 'y': 0.9094499349594116, 'z': 1.0938019752502441}
+Reached:  CounterTop
+[{'name': 'CounterTop', 'contains': ['Lettuce'], 'state': 'None'}]
+['Lettuce'] CounterTop CounterTop_2ec5b119
+Lettuce Pan|+00.00|+00.90|+00.95
+Lettuce Apple|-00.48|+00.97|+00.41
+Lettuce Knife|-00.64|+00.91|+01.62
+Lettuce Spoon|-00.66|+00.90|+01.38
+Lettuce Bowl|-00.65|+00.90|+01.26
+Lettuce Cup|-00.65|+00.90|+00.74
+Lettuce Bread|-00.71|+00.98|+00.43
+['Lettuce'] CounterTop CounterTop_3a334212
+Lettuce Microwave|-02.58|+00.90|+02.44
+Lettuce Toaster|-02.57|+00.90|+01.88
+Lettuce Plate|-02.35|+00.90|+00.05
+Lettuce Spatula|-02.31|+00.91|+00.33
+Lettuce Potato|-02.24|+00.94|-00.18
+['Lettuce'] CounterTop CounterTop_dd240130
+Lettuce Kettle|+00.85|+00.90|-01.79
+Lettuce PaperTowelRoll|+00.69|+01.01|-01.83
+Lettuce CoffeeMachine|+00.46|+00.90|-01.81
+Lettuce Lettuce|+01.11|+00.83|-01.43
+Lettuce Lettuce|+01.11|+00.83|-01.43
+Lettuce DishSponge|+01.74|+00.90|-00.86
+Lettuce SoapBottle|+01.02|+00.90|-01.65
+['Lettuce'] CounterTop CounterTop_cf984886
+Lettuce SaltShaker|+01.67|+00.90|+00.46
+Lettuce PepperShaker|+01.76|+00.90|+00.37
+Lettuce Fork|+01.44|+00.90|+00.38
+Lettuce ButterKnife|+01.44|+00.91|+00.46
+1 1 1
+SR:1, TC:1, GCR:1.0, Exec:1.0, RU:1
