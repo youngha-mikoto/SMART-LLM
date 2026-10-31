@@ -124,25 +124,8 @@ if __name__ == "__main__":
     parser.add_argument("plan_path", help="Path to decomposed_plan.py")
     args = parser.parse_args()
 
-    print("Subtasks:")
-    for name in extract_subtask_names(args.plan_path):
-        print(name)
-
-    print("\nRequired skills:")
+    print("Parsing Decomposed Plans...")
     required_skills = extract_required_skills(args.plan_path)
-    for name, skills in required_skills.items():
-        print(f"{name}: {skills}")
-
-    print("\nThread targets:")
-    print(extract_thread_targets(args.plan_path))
-
-    print("\nExecution events:")
     events = extract_execution_events(args.plan_path)
-    for event in events:
-        print(event)
-
-    print("\nDAG:")
     dag = build_dag(events)
-    print(dag)
-
     save_task_requirements(args.plan_path, required_skills, dag)
