@@ -118,6 +118,18 @@ def build_dag(events):
     return {"nodes": nodes, "edges": edges}
 
 
+def save_task_requirements(plan_path, required_skills, dag):
+    requirements = {
+        "subtasks": {
+            name: {"required_skills": skills}
+            for name, skills in required_skills.items()
+        },
+        "edges": dag["edges"],
+    }
+    output_path = Path(plan_path).with_name("task_requirements.json")
+    output_path.write_text(json.dumps(requirements, indent=2) + "\n", encoding="utf-8")
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("plan_path", help="Path to decomposed_plan.py")
@@ -132,19 +144,21 @@ if __name__ == "__main__":
     for name, skills in required_skills.items():
         print(f"{name}: {skills}")
 
-    output_path = Path(args.plan_path).with_name("required_skills.json")
-    output_path.write_text(json.dumps(required_skills, indent=2) + "\n", encoding="utf-8")
-
     print("\nUsed objects:")
-    for name, objects in extract_used_objects(args.plan_path).items():
+    used_objects = extract_used_objects(args.plan_path)
+    for name, objects in used_objects.items():
         print(f"{name}: {objects}")
 
     print("\nThread targets:")
     print(extract_thread_targets(args.plan_path))
 
     print("\nExecution events:")
-    for event in extract_execution_events(args.plan_path):
+    events = extract_execution_events(args.plan_path)
+    for event in events:
         print(event)
 
     print("\nDAG:")
-    print(build_dag(extract_execution_events(args.plan_path)))
+    dag = build_dag(events)
+    print(dag)
+
+    save_task_requirements(args.plan_path, required_skills, dag)
