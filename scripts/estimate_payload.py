@@ -1,3 +1,4 @@
+import argparse
 import ast
 import json
 from pathlib import Path
@@ -24,3 +25,18 @@ def build_payload_prompt(plan, objects):
         f"Objects (mass in kg):\n{json.dumps(objects, indent=2)}\n\n"
         f"Plan:\n{plan}"
     )
+
+
+def build_payload_prompt_from_file(plan_path):
+    plan_path = Path(plan_path)
+    plan = plan_path.read_text(encoding="utf-8")
+    objects = load_object_masses(plan_path.with_name("log.txt"))
+    return build_payload_prompt(plan, objects)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("plan_path", help="Path to decomposed_plan.py")
+    args = parser.parse_args()
+
+    print(build_payload_prompt_from_file(args.plan_path))
