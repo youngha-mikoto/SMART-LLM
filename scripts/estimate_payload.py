@@ -23,6 +23,8 @@ def build_payload_prompt(plan, objects):
         "State any assumptions about slices, quantities, or object selection. "
         "Use null if the payload cannot be estimated from the supplied data.\n"
         "Return only JSON without Markdown fences, keyed by subtask function name.\n"
+        "Use the exact top-level function names as JSON keys.\n"
+        "Do not split or rename functions based on subtask comments.\n"
         "Each value must contain required_max_payload_kg and assumption.\n\n"
         f"Objects (mass in kg):\n{json.dumps(objects, indent=2)}\n\n"
         f"Plan:\n{plan}"
