@@ -54,8 +54,24 @@ def estimate_payload(prompt):
 
 
 def save_token_usage(log_path, usage):
-    with open(log_path, "a", encoding="utf-8") as file:
-        file.write(f"\npayload_token_usage = {json.dumps(usage)}\n")
+    log_path = Path(log_path)
+    lines = log_path.read_text(encoding="utf-8").splitlines()
+    usage_line = next(line for line in lines if line.startswith("token_usage = "))
+    token_usage = json.loads(usage_line.split(" = ", 1)[1])
+    token_usage["payload_estimation"] = usage
+    total_usage = {
+        key: sum(stage[key] for stage in token_usage.values())
+        for key in ("prompt_tokens", "completion_tokens", "total_tokens")
+    }
+
+    for index, line in enumerate(lines):
+        if line.startswith("token_usage = "):
+            lines[index] = f"token_usage = {json.dumps(token_usage)}"
+        elif line.startswith("total_token_usage = "):
+            lines[index] = f"total_token_usage = {json.dumps(total_usage)}"
+
+    lines = [line for line in lines if not line.startswith("payload_token_usage = ")]
+    log_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def save_payload_estimates(requirements_path, estimates):
