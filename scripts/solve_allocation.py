@@ -67,6 +67,12 @@ def solve_allocation(eligible_robots, execution_layers):
         return {task: robot for (task, robot), var in variables.items() if var in model}
 
 
+def save_allocation(output_path, allocation):
+    Path(output_path).write_text(
+        json.dumps(allocation, indent=2) + "\n", encoding="utf-8"
+    )
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("requirements_path", type=Path)
@@ -76,9 +82,4 @@ if __name__ == "__main__":
     robots = load_robots(args.requirements_path.with_name("log.txt"))
     eligible_robots = find_eligible_robots(requirements, robots)
     allocation = solve_allocation(eligible_robots, requirements["execution_layers"])
-    print(json.dumps({
-        "requirements": requirements,
-        "robots": robots,
-        "eligible_robots": eligible_robots,
-        "allocation": allocation,
-    }, indent=2))
+    save_allocation(args.requirements_path.with_name("allocation.json"), allocation)
