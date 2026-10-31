@@ -77,6 +77,11 @@ def process_decomposed_plan(plan_path, api_key_path):
          "--api-key-file", api_key_path],
         check=True,
     )
+    subprocess.run(
+        [sys.executable, script_dir / "solve_allocation.py",
+         Path(plan_path).with_name("task_requirements.json")],
+        check=True,
+    )
 
 
 if __name__ == "__main__":
