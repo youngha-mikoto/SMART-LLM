@@ -67,6 +67,18 @@ def get_ai2_thor_objects(floor_plan_id):
     obj = convert_to_dict_objprop(obj, obj_mass)
     return obj
 
+def process_decomposed_plan(plan_path, api_key_path):
+    script_dir = Path(__file__).resolve().parent
+    subprocess.run(
+        [sys.executable, script_dir / "parse_plan.py", plan_path], check=True
+    )
+    subprocess.run(
+        [sys.executable, script_dir / "estimate_payload.py", plan_path,
+         "--api-key-file", api_key_path],
+        check=True,
+    )
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--floor-plan", type=int, required=True)
@@ -263,6 +275,11 @@ if __name__ == "__main__":
 
             with open(f"./logs/{folder_name}/decomposed_plan.py", 'w') as d:
                 d.write(decomposed_plan[idx])
+
+            process_decomposed_plan(
+                f"./logs/{folder_name}/decomposed_plan.py",
+                args.openai_api_key_file + ".txt",
+            )
                 
             # with open(f"./logs/{folder_name}/allocated_plan.py", 'w') as a:
                 # a.write(allocated_plan[idx])
