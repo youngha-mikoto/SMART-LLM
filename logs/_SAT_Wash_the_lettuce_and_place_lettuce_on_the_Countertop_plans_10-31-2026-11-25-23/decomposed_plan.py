@@ -1,0 +1,36 @@
+# Task Description: Wash the lettuce and place lettuce on the CounterTop
+
+# GENERAL TASK DECOMPOSITION
+# SubTask 1: Wash the Lettuce. (Skills Required: GoToObject, PickupObject, PutObject, SwitchOn, SwitchOff)
+# SubTask 2: Place Lettuce on the CounterTop. (Skills Required: GoToObject, PickupObject, PutObject)
+
+# CODE
+def wash_lettuce_and_place_on_countertop():
+    # 0: SubTask 1: Wash the Lettuce
+    # 1: Go to the Lettuce.
+    GoToObject('Lettuce')
+    # 2: Pick up the Lettuce.
+    PickupObject('Lettuce')
+    # 3: Go to the Sink.
+    GoToObject('Sink')
+    # 4: Put the Lettuce in the Sink.
+    PutObject('Lettuce', 'Sink')
+    # 5: Switch on the Faucet to wash the Lettuce.
+    SwitchOn('Faucet')
+    # 6: Wait for a while to let the Lettuce wash.
+    time.sleep(5)
+    # 7: Switch off the Faucet.
+    SwitchOff('Faucet')
+    # 8: Pick up the washed Lettuce.
+    PickupObject('Lettuce')
+
+    # 1: SubTask 2: Place Lettuce on the CounterTop
+    # 9: Go to the CounterTop.
+    GoToObject('CounterTop')
+    # 10: Put the Lettuce on the CounterTop.
+    PutObject('Lettuce', 'CounterTop')
+
+# Execute Task
+wash_lettuce_and_place_on_countertop()
+
+# Task Wash the lettuce and place lettuce on the CounterTop is done
