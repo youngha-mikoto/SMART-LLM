@@ -69,6 +69,7 @@ def get_ai2_thor_objects(floor_plan_id):
 
 def process_decomposed_plan(plan_path, api_key_path):
     script_dir = Path(__file__).resolve().parent
+    print("Parsing Decomposed Plans...")
     subprocess.run(
         [sys.executable, script_dir / "parse_plan.py", plan_path], check=True
     )
@@ -77,6 +78,7 @@ def process_decomposed_plan(plan_path, api_key_path):
          "--api-key-file", api_key_path],
         check=True,
     )
+    print("Solving Allocation...")
     subprocess.run(
         [sys.executable, script_dir / "solve_allocation.py",
          Path(plan_path).with_name("task_requirements.json")],

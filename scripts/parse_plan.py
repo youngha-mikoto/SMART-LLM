@@ -124,7 +124,6 @@ if __name__ == "__main__":
     parser.add_argument("plan_path", help="Path to decomposed_plan.py")
     args = parser.parse_args()
 
-    print("Parsing Decomposed Plans...")
     required_skills = extract_required_skills(args.plan_path)
     events = extract_execution_events(args.plan_path)
     dag = build_dag(events)
