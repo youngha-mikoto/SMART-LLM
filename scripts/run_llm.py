@@ -214,6 +214,8 @@ if __name__ == "__main__":
         curr_prompt += f"\n# TASK ALLOCATION"
         curr_prompt += f"\n\nrobots = {available_robots[i]}"
         curr_prompt += solution
+        curr_prompt += "\n# IMPORTANT: Preserve the basic structure of decomposed_plan.py."
+        curr_prompt += "\n# IMPORTANT: Follow the provided few-shot examples."
         curr_prompt += f"\n# CODE Solution  \n"
         
         if "gpt" not in args.gpt_version:
