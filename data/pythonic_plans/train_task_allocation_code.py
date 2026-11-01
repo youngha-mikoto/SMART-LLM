@@ -190,7 +190,7 @@ def throw_fork_in_trash():
     # 1: Go to the GarbageCan.
     GoToObject('GarbageCan')
     # 2: Throw the Fork in the GarbageCan.
-    ThrowObject('Fork', 'GarbageCan')
+    ThrowObject('Fork')
 
 # Execute SubTask 1
 pick_up_fork()
@@ -219,13 +219,13 @@ def pick_up_fork(robot_list):
     # 2: Pick up the Fork using robot1 and robot2 togethor.
     PickupObject(robot_list,'Fork')
 
-def throw_fork_in_trash():
+def throw_fork_in_trash(robot_list):
     # robot_list = [robot1,robot3]
     # 0: SubTask 2: Throw the Fork in the Trash
     # 1: Go to the GarbageCan using robot1 and robot3 togethor.
     GoToObject(robot_list,'GarbageCan')
     # 2: Throw the Fork in the GarbageCan using robot1 and robot3 togethor.
-    ThrowObject(robot_list,'Fork', 'GarbageCan')
+    ThrowObject(robot_list,'Fork')
 
 # Execute SubTask 1
 pick_up_fork([robots[0],robots[1]])
