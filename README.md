@@ -62,3 +62,23 @@ If you find this work useful for your research, please consider citing:
  	year={2023}
 }
 ```
+
+## 개별연구(CSC 현장실습-모바일 로봇 인공지능 기술 개발)
+
+### 6-1. Slice the tomato
+
+```
+SR:1, TC:1, GCR:1.0, Exec:1.0, RU:1
+```
+
+### 6-2. Wash the lettuce and place lettuce on the Countertop
+
+```
+SR:1, TC:1, GCR:1.0, Exec:1.0, RU:1
+```
+
+### 6-3. Throw the Spatula in the trash
+
+```
+SR:0, TC:0, GCR:0.0, Exec:0.5, RU:1
+```
